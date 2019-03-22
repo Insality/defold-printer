@@ -194,4 +194,4 @@ Insality
 # License
 My code is under MIT license
 
-(utf8 module)[https://github.com/tst2005/lua-utf8string] MIT
+[utf8 module](https://github.com/tst2005/lua-utf8string) MIT
