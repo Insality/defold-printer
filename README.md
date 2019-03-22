@@ -10,7 +10,8 @@ Add library to dependency:
 
 # Basic Setup
 
-Place printer template on you gui scene. Setup font of text and set size of printer background
+Place printer template on you gui scene. Setup font of text and set size of printer background.
+
 Text will appearing from top-left of this background. You can setup alpha of this node to see text area.
 
 setup in gui module:
@@ -64,7 +65,8 @@ default = {
 - `shake_on_write` when true, shake all text symbols when any symbol is start appearing
 
 ## Style usage
-To setup your styles, use `printer.add_styles( {styles} )`. Styles is array of lua-table with style parameters
+To setup your styles, use `printer.add_styles( {styles} )`. Styles is array of lua-table with style parameters.
+
 By default, all new print text have *default* style. To change it, you need point needed style like this:
 `{my_style}This is styled text`
 
@@ -87,7 +89,7 @@ if self.printer.is_print then
 else
 	self.index = self.index + 1
 	if self.index <= #self.texts then
-		self.printer:print(self.texts[self.current_index])
+		self.printer:print(self.texts[self.index])
 	end
 end
 ```
