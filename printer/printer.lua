@@ -260,10 +260,8 @@ local function create_symbol(self, text, stylename)
 	end
 
 	local last_word = self.current_words[#self.current_words]
-	if text ~= " " then
-		table.insert(last_word, node_data)
-	else
-		table.insert(last_word, get_symbol(self, " ", stylename))
+	table.insert(last_word, node_data)
+	if text == " " then
 		table.insert(self.current_words, {})
 	end
 
