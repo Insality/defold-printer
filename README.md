@@ -70,7 +70,7 @@ To setup your styles, use `printer.add_styles( {styles} )`. Styles is array of l
 By default, all new print text have *default* style. To change it, you need point needed style like this:
 `{my_style}This is styled text`
 
-You can reset style to default by using `{/}'. Example:
+You can reset style to default by using `{/}`. Example:
 `{my_style}This is styled text. {/}But this no`
 
 You can use `{n}` to make new line. Example:
