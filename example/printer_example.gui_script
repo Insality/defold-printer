@@ -13,6 +13,7 @@ local texts = {
 	"And this {hard}final{/} text, to show you {n}{hard}power{/}{n} of printer!{n}Good Luck",
 }
 
+
 local function next_print(self)
 	local text = texts[self.index]
 	local source = nil
@@ -21,6 +22,7 @@ local function next_print(self)
 	end
 	self.printer:print(text, source)
 end
+
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -41,13 +43,16 @@ function init(self)
 	end)
 end
 
+
 function final(self)
 	self.printer:final()
 end
 
+
 function update(self, dt)
 	self.printer:update(dt)
 end
+
 
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then

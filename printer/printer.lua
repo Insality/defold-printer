@@ -36,7 +36,7 @@
 	self.printer:print("This is with source to use another default style", "Illidan")
 
 	Full documentation read at:
-	README.md
+	https://github.com/Insality/defold-printer/blob/master/README.md
 --]]
 
 local colors = require("printer.colors")

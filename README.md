@@ -6,7 +6,7 @@ Support UTF-8 symbols (via utf-8.lua). So Russian and other 2+ bytes symbol lang
 # Install
 
 Add library to dependency:
-`link to .zip`
+`https://github.com/Insality/defold-printer/archive/master.zip`
 
 # Basic Setup
 
@@ -192,4 +192,6 @@ Place it in gui final function to correct final printer component
 Insality
 
 # License
-utf-8 lua link
+My code is under MIT license
+
+(utf8 module)[https://github.com/tst2005/lua-utf8string] MIT
