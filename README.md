@@ -1,4 +1,4 @@
-![](docs/logo.jpg)
+![](docs/logo.png)
 
 # Printer
 A symbol-by-symbol text writer for Defold Engine. Developed for rich game dialogs.
