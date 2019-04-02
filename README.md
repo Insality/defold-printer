@@ -9,6 +9,8 @@ Support UTF-8 symbols (via utf-8.lua). So Russian and other 2+ bytes symbol lang
 Add library to dependency:
 `https://github.com/Insality/defold-printer/archive/master.zip`
 
+![](docs/example.gif)
+
 # Basic Setup
 
 Place printer template on you gui scene. Setup font of text and set size of printer background.
