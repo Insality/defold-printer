@@ -9,7 +9,7 @@ end
 function M.hex2rgba(hex) -- normalized
     hex = string.gsub(hex, "#", "")
     local color
-    local w = gui.get_color("printer/prefab").w
+    local w = gui.get_color(gui.get_node("printer/prefab")).w
     if(string.len(hex) == 3) then
         color = vmath.vector4(tonumber("0x"..string.sub(hex, 1,1)) * 17, tonumber("0x"..string.sub(hex, 2,2)) * 17, tonumber("0x"..string.sub(hex, 3,3)) * 17, w)
     elseif(string.len(hex) == 6) then
