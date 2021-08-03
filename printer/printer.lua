@@ -386,7 +386,7 @@ end
 
 local function print_next(self)
 	local node_data = self.current_letters[self.current_index]
-	pprint(node_data)
+	-- pprint(node_data)
 
 	appear_node(self, node_data)
 	self.current_index = self.current_index + 1
