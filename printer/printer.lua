@@ -205,7 +205,10 @@ local function update_letter_pos(self, node_data)
 	if not self.prev_node or is_new_row then
 		-- first symbol
 		pos.x = -self.parent_size.x/2
-		pos.y = self.parent_size.y - ((self.current_row-1) * style.font_height) - (self.current_row * style.line_spacing) - style.line_spacing
+		pos.y = self.parent_size.y - ((self.current_row-1) * style.font_height) - style.font_height
+        if is_new_row then
+            pos.y = pos.y - style.line_spacing * (self.current_row-1)
+        end
 	else
 		local prev_pos = gui.get_position(self.prev_node.node)
 		local prev_size = get_letter_size(self.prev_node)
