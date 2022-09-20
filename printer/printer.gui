@@ -100,7 +100,7 @@ nodes {
   id: "box"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_FIT
   parent: "text_parent"
   layer: ""

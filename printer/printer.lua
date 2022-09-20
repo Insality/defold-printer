@@ -1,3 +1,4 @@
+---@diagnostic disable: param-type-mismatch, undefined-field
 --[[
 	Defold Printer Module
 	Author: Insality
@@ -71,6 +72,7 @@ local styles = {
 	default = {
 		font_height = 28,
 		spacing = 1, -- pixels between letters
+		line_spacing = 8,
 		scale = 1, -- scale of character
 		waving = false, -- if true - do waving by sinus
 		color = "#FFFFFF",
@@ -203,7 +205,7 @@ local function update_letter_pos(self, node_data)
 	if not self.prev_node or is_new_row then
 		-- first symbol
 		pos.x = -self.parent_size.x/2
-		pos.y = self.parent_size.y/2 - (self.current_row-1) * style.font_height - style.font_height/2
+		pos.y = self.parent_size.y - ((self.current_row-1) * style.font_height) - (self.current_row * style.line_spacing) - style.line_spacing
 	else
 		local prev_pos = gui.get_position(self.prev_node.node)
 		local prev_size = get_letter_size(self.prev_node)
@@ -305,7 +307,7 @@ local function precreate_text(self)
 			end
 			self.string = uobj:sub(close_index+1, #uobj)
 
-			-- if style contains ":" - make whitespace next or it to write it
+			-- if style contains ":" - make whitespace next to it or write it
 			-- For now use special for images
 			if self.stylename:find(":") then
 				self.string = " " .. self.string
@@ -386,7 +388,6 @@ end
 
 local function print_next(self)
 	local node_data = self.current_letters[self.current_index]
-	-- pprint(node_data)
 
 	appear_node(self, node_data)
 	self.current_index = self.current_index + 1
@@ -405,6 +406,7 @@ local function print_next(self)
 		end
 	else
 		self.is_print = false
+		msg.post('.', hash('print_done'))
 	end
 end
 
@@ -437,6 +439,16 @@ end
 
 --== PUBLIC FUNCTIONS ==--
 
+---< function that fades the printer instance out
+-- author: rocamocha
+function M.fadeout(self)
+	self.is_print = false
+	for i = 1, #self.current_letters do
+		local node = self.current_letters[i].node
+		gui.animate(node, 'color.w', 0, gui.EASING_LINEAR, 0.3)
+	end
+end -->
+
 function M.instant_appear(self)
 	local current_letter = self.current_letters[self.current_index]
 
@@ -450,6 +462,9 @@ end
 
 
 function M.print(self, str, source)
+	self.node_parent_pos = gui.get_position(self.node_parent)
+	self.parent_size = gui.get_size(self.node_parent)
+
 	if self.is_print then
 		self:instant_appear()
 		return false
@@ -486,6 +501,9 @@ end
 
 
 function M.update(self, dt)
+	self.node_parent_pos = gui.get_position(self.node_parent)
+	self.parent_size = gui.get_size(self.node_parent)
+
 	if self.is_print then
 		self.write_timer = self.write_timer - dt
 		if self.write_timer <= 0 then

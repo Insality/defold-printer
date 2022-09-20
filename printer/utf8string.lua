@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-field, redundant-parameter, undefined-global
+
 local m = {} -- the module
 
 local ustring = {} -- table to index equivalent string.* functions
