@@ -42,7 +42,7 @@ Style is lua table with parameters. The default style is the following:
 ```lua
 default = {
 	font_height = 28,
-    line_spacing = 8,
+    	line_spacing = 8,
 	spacing = 1,
 	scale = 1,
 	waving = false,
