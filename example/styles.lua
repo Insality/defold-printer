@@ -22,7 +22,7 @@ return {
 
 	slow_appear = {
 		speed = 0.08,
-		appear = 0.15,
+		appear = 0.2,
 		color = "#FFFFFF"
 	},
 

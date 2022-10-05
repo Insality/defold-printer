@@ -105,7 +105,8 @@ nodes {
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
-  alpha: 0.0
+  alpha: 1.0
+  overridden_fields: 30
   template_node_child: true
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
@@ -158,9 +159,9 @@ nodes {
     w: 1.0
   }
   shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
@@ -172,6 +173,7 @@ nodes {
   outline_alpha: 1.0
   shadow_alpha: 1.0
   overridden_fields: 10
+  overridden_fields: 16
   template_node_child: true
   text_leading: 1.0
   text_tracking: 0.0

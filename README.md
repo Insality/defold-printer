@@ -42,7 +42,6 @@ Style is lua table with parameters. The default style is the following:
 ```lua
 default = {
 	font_height = 28,
-    	line_spacing = 8,
 	spacing = 1,
 	scale = 1,
 	waving = false,
@@ -66,7 +65,6 @@ These parameters *must* be present in your default or source style.
 - `shaking` in pixels, the amount to shake every symbol the style applies to.
 
 ## Other Parameters:
-- `line_spacing` in pixels, additional distance between new lines
 - `can_skip` if false, printer.instant_appear is disabled while text with this style appears
 - `sound` string. Name of the sound played when a symbol appears. TO-DO: Need to rewrite printer.play_sound function.
 - `waving` set true to enable waving symbol effect
@@ -213,10 +211,10 @@ Use in the gui `final()` function to correct final printer component.
 Insality
 
 ## Contributors
-rocamocha 
+rocamocha
 
 # Changelog
-- \[9-20-22\] Improved functionality of creating new lines and added optional style parameter `line_spacing`. Updated documentation, converted passive voice to active voice where possible. (rocamocha)
+- \[9-20-22\] Improved functionality of creating new lines. Updated documentation, converted passive voice to active voice where possible. (rocamocha)
 
 # License
 My code is under MIT license

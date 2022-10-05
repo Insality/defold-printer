@@ -44,6 +44,9 @@ local colors = require("printer.colors")
 local utf8 = require("printer.utf8string")
 local custom_regex = require("printer.regex")
 
+local HASH_PRINT_DONE = hash("print_done")
+local COLOR_INVISIBLE = vmath.vector4(1, 1, 1, 0)
+
 local contains = function(t, value)
 	for i = 1, #t do
 		if t[i] == value then
@@ -54,14 +57,14 @@ local contains = function(t, value)
 end
 
 local split = function(inputstr, sep)
-    sep = sep or "%s"
-    local t = {}
-    local i = 1
-    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
-            t[i] = str
-            i = i + 1
-    end
-    return t
+	sep = sep or "%s"
+	local t = {}
+	local i = 1
+	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+			t[i] = str
+			i = i + 1
+	end
+	return t
 end
 
 local M = {}
@@ -72,7 +75,6 @@ local styles = {
 	default = {
 		font_height = 28,
 		spacing = 1, -- pixels between letters
-		line_spacing = 8,
 		scale = 1, -- scale of character
 		waving = false, -- if true - do waving by sinus
 		color = "#FFFFFF",
@@ -105,11 +107,11 @@ end
 local function get_style(self, name)
 	if name == "/" or name == "default" or name == nil then
 		if self.default_style == "default" then
-            self.last_style = styles.default
+			self.last_style = styles.default
 			return styles.default
 		else
 			name = self.default_style
-            self.last_style = styles[name]
+			self.last_style = styles[name]
 		end
 	end
 
@@ -118,7 +120,7 @@ local function get_style(self, name)
 		style[k] = v
 	end
 
-    for k, v in pairs(self.last_style) do
+	for k, v in pairs(self.last_style) do
 		style[k] = v
 	end
 
@@ -130,7 +132,7 @@ local function get_style(self, name)
 		print("[Printer]: No style name " .. name)
 	end
 
-    self.last_style = style
+	self.last_style = style
 	return style
 end
 
@@ -210,12 +212,9 @@ local function update_letter_pos(self, node_data)
 
 	if not self.prev_node or is_new_row then
 		-- first symbol
+		local row_index = (self.current_row-1)
 		pos.x = -self.parent_size.x * 0.5
-		pos.y = self.parent_size.y - ((self.current_row-1) * style.font_height) - style.font_height
-        if is_new_row then
-            local line_spacing = style.line_spacing or style.font_height * 0.5
-            pos.y = pos.y - line_spacing * (self.current_row-1)
-        end
+		pos.y = self.parent_size.y * 0.5 - (row_index * style.font_height) - style.font_height * 0.5
 	else
 		local prev_pos = gui.get_position(self.prev_node.node)
 		local prev_size = get_letter_size(self.prev_node)
@@ -235,7 +234,6 @@ local function set_word_pos(self, word)
 end
 
 
-local invisible = vmath.vector4(1, 1, 1, 0)
 local function get_symbol(self, text, stylename)
 	local is_icon = false
 	local node
@@ -254,7 +252,7 @@ local function get_symbol(self, text, stylename)
 	local node_data = {node = node, style = get_style(self, stylename), text = text, is_icon = is_icon}
 	gui.set_enabled(node, true)
 	gui.set_parent(node, self.node_parent)
-	gui.set_color(node, invisible)
+	gui.set_color(node, COLOR_INVISIBLE)
 	table.insert(self.current_letters, node_data)
 
 	return node_data
@@ -367,7 +365,7 @@ local function appear_node(self, node_data, is_instant)
 		color.w = 1
 		gui.animate(node, gui.PROP_COLOR, color, gui.EASING_OUTSINE, style.appear)
 	else
-        color.w = 1
+		color.w = 1
 		gui.set_color(node, color)
 	end
 
@@ -417,7 +415,7 @@ local function print_next(self)
 		end
 	else
 		self.is_print = false
-		msg.post('.', hash('print_done'))
+		msg.post('.', HASH_PRINT_DONE)
 	end
 end
 
@@ -458,6 +456,7 @@ function M.fadeout(self)
 	end
 end
 
+
 function M.instant_appear(self)
 	local current_letter = self.current_letters[self.current_index]
 
@@ -482,7 +481,7 @@ function M.print(self, str, source)
 		self.new_row = false
 		self.stylename = source_styles[source] or "default"
 		self.default_style = self.stylename
-        self.last_style = styles[self.default_style]
+		self.last_style = styles[self.default_style]
 		self.prev_node = false
 		clear_prev_text(self)
 		self.string = str
