@@ -3,14 +3,14 @@ local styles = require("example.styles")
 
 
 local texts = {
-	"Hello! This is base text what will be write by defold-printer",
+	"Hello! This text is being handled by a printer!",
 	"You can print text with {hard}some style{/}",
 	"Or just {hard}mix{/} the {slow_appear}different{/} styles",
-	"Also, there is some advanced options:",
+	"Also, there are some advanced options:",
 	{"You can write text with pointed {define_style}source{/}, to change default text", "defold"},
-	"Or, you can define some words, that you want print with defined style",
+	"Or, you can define some words, that you want to print with a defined style",
 	"{image:char}You can put images {image:dog} in your text like this:{image:char}",
-	"And this {hard}final{/} text, to show you {n}{hard}power{/}{n} of printer!{n}Good Luck",
+	"And this {hard}final{/} text, to show you {n}{slow_appear}the {hard}power{/}{n} of printer!{n}Good Luck",
 }
 
 

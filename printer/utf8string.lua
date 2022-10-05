@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-field, redundant-parameter, undefined-global
+
 local m = {} -- the module
 
 local ustring = {} -- table to index equivalent string.* functions
@@ -269,13 +271,13 @@ ustring.reverse	= assert(utf8_reverse)
 ustring.sub	= assert(utf8_sub)
 ustring.upper	= assert(utf8_upper)
 
----- custome add-on ----
+---- custom add-on ----
 ustring.type	= assert(utf8_typeof)
 ustring.tostring = assert(utf8_tostring)
 ustring.clone	= assert(utf8_clone)
 --ustring.debugdump = function(self) return table.concat(self, " ") end
 
--- Add fonctions to the module
+-- Add functions to the module
 for k,v in pairs(ustring) do m[k] = v end
 
 -- Allow to use the module directly to convert strings

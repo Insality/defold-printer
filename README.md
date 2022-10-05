@@ -38,10 +38,11 @@ self.printer:print("This is just simple text")
 ```
 
 # Styles
-Style is lua table with parameters. Default style look like:
+Style is lua table with parameters. The default style is the following:
 ```lua
 default = {
 	font_height = 28,
+    	line_spacing = 8,
 	spacing = 1,
 	scale = 1,
 	waving = false,
@@ -54,33 +55,38 @@ default = {
 	shake_on_write = 0,
 }
 ```
-## Parameters:
-- `font_height` in pixels, height of every symbol or image
-- `spacing` in pixels, distance between symbols
+## Required Default Parameters:
+These parameters *must* be present in your default or source style.
+- `font_height` in pixels, height of every symbol or image - also used to determine new line position
+- `spacing` in pixels, horizontal distance between symbols
 - `scale` set scale of every symbol to this value
-- `waving` set true, to enable waving symbol effect
-- `color` string in hex, like "#CACACA". Set color of every text symbol
-- `speed` in seconds. The speed of text typing
-- `appear` in seconds. The speed of symbol appearing. Via gui.animate from alpha 0 -> 1
-- `shaking` in pixels. Set value > 0 to enable shaking of every symbol
-- `sound` string. Name of sound, what will be played, when text is start appearing. Need to rewrite printer.play_sound function.
-- `can_skip` if false, printer.instant_appear will not work, while text with this style is appearing
-- `shake_on_write` when true, shake all text symbols when any symbol is start appearing
+- `color` hex color code for every symbol the style applies to (ex. "#CACACA")
+- `speed` in seconds, the time between each symbol printing
+- `appear` in seconds, the speed of a symbol fading in via gui.animate from alpha 0 -> 1
+- `shaking` in pixels, the amount to shake every symbol the style applies to.
+
+## Other Parameters:
+- `line_spacing` in pixels, additional distance between new lines
+- `can_skip` if false, printer.instant_appear is disabled while text with this style appears
+- `sound` string. Name of the sound played when a symbol appears. TO-DO: Need to rewrite printer.play_sound function.
+- `waving` set true to enable waving symbol effect
+- `shake_on_write` when true, shake all text symbols when any symbol begins appearing
 
 ## Style usage
-To setup your styles, use `printer.add_styles( {styles} )`. Styles is array of lua-table with style parameters.
+To setup your styles, use `printer.add_styles( {styles} )`. Styles is array of lua tables with style parameters. We will refer to any key of this array as a 'stylename'.
 
-By default, all new print text have *default* style. To change it, you need point needed style like this:
+All new printed text uses the *default* style initially. To change it, enclose a stylename with `{` and `}` before the affected text.
 `{my_style}This is styled text`
 
-You can reset style to default by using `{/}`. Example:
+Use `{/}` to stop using the previously specified style. Example:
 `{my_style}This is styled text. {/}But this no`
 
-You can use `{n}` to make new line. Example:
+Use `{n}` to add a line break. Example:
 `This row on first line.{n}This line on second line`
 
 You can mix many styles in one row. Example:
 `{Illidan_name}Illidan{/}: you are {red}not {waving}prepared{/}!`
+In the above example, for the word 'prepared' - any styles from `{red}` that also exist in `{waving}` will be overwritten by `{waving}`. However, parameters in `{red}` that do not exist in `{waving}` will not be affected. The style exit `{/}` removes the effects of all styles.
 
 # Advanced Setup
 
@@ -99,29 +105,35 @@ end
 
 
 ## Source predefined styles
-You can predefine styles for special sources. It will become default style for current text. For example, if your setup source style:
+Set up a source style to override the default style with a different style for a specific print call.
+For example, set up the source:
 `printer.add_source_style("bob", "bob_style")`
-add call next:
+And specify the source in the print call:
 `printer:print("Any text you want", "bob")`
-Instead of *default* style, it will be printed with style *bob_style*
+Anytime the *default* style would be used, *bob_style* will be used instead.
 
 ## Word styles
-You can predefine styles for special word. For example, if you setup word style:
+You can predefine styles for specific strings.
+For example, set up a word style:
 `printer.add_word_style("powerful", "cool_style")`
-and will print next text: `The Defold is amazing, powerful engine`
-It will auto apply style and will looks similar to:
+Now, providing the following text to a print call:
+`The Defold is amazing, powerful engine`
+will print as if you provided:
 `The Defold is amazing, {cool_style}powerful{/} engine`
-*Point*: the word is case sensitive. You can use it for coloring characters name in your game. The word style will extend default style of current text.
-*Point*: It will work with source predefined styles. Just extend default style of source predefined text.
+
+Important points about word styles:
+- *The 'word' (really it is just a string) is case sensitive. You can use it for coloring characters' names in your game.*
+- *The word style will extend default style of current text, including source style overrides.*
+- *Word styles function by modifying your original print string to include style tags, and inserts the style exit `{/}` at the end.*
 
 ## Image usage
-You can insert images in your text via `{image:name}` syntax.
-It will place image node and call `gui.play_flipbook(node, name)` to this
+Insert images in your text using `{image:name}` syntax.
+It will place an image node and call `gui.play_flipbook(node, name)` to it.
 Example:
 `printer:print("Lets trade this for 500 {image:coins}!)`
 
-## Multiply instancing
-You can create multiply printer instances with printer.new, using different templates
+## Multiple instancing
+Create multiple printer instances with `printer.new()`, using different templates.
 
 ## Usage examples
 ```lua
@@ -150,20 +162,24 @@ Start printing text on selected instance
 ## printer.is_print
 Boolean value to check, if printer now printing text or not
 
+## printer.fadeout
+
 ## printer.instant_appear(instance)
-Instantly appear all nodes, what currently printing. If text is already printed, have no effect
+Make all nodes for the current text visible immediately.
 ### PARAMETERS
 - `instance` printer instance, created by *printer.new*
 
 ## printer.clear(instance)
-Clear all current printed text
+Clear all current printed text.
 ### PARAMETERS
 - `instance` printer instance, created by *printer.new*
 
 ## printer.play_sound(name)
-To play sound, you should override this function.
+This function is called whenever a symbol is printed.
+To play sound, you should override this function with your sound implementation.
 ### PARAMETERS
-- `name` string, name of played sound
+- `name` string, name of played sound --> really just a container for whatever argument you might need here.
+*For a more complex implementation tied to the printer, create an external function and call it from here.*
 
 ## printer.add_styles(styles)
 Add custom styles to printer module
@@ -171,30 +187,36 @@ Add custom styles to printer module
 - `styles` lua table with style parameters. Elements are: *{style_id: {params}}*
 
 ## printer.add_source_style(source, style)
-Add one custom source style to printer module
+Add a source style to printer module.
 ### PARAMETERS
-- `source` string, source id to use it as source param in *printer.print* function
+- `source` string, source id needed to index added style as source param in *printer.print* function
 - `style` string, style id
 
 ## printer.add_word_style(word, style)
-Add one custom word style to printer module
+Add a word style to printer module.
 ### PARAMETERS
-- `word` string, word what will be wrapped with pointed style
+- `word` string, word to wrapped with specified style
 - `style` string, style id
 
 ## printer.update(self, dt)
-Place it in gui update function to update all print instance you have.
+Use in the gui `update()` function to update the printer instance.
 ### PARAMETERS
 - `self` gui self context
 - `dt` dt parameter from update script
 
 ## printer.final(self)
-Place it in gui final function to correct final printer component
+Use in the gui `final()` function to correct final printer component.
 ### PARAMETERS
 - `self` gui self context
 
 # Author
 Insality
+
+## Contributors
+rocamocha 
+
+# Changelog
+- \[9-20-22\] Improved functionality of creating new lines and added optional style parameter `line_spacing`. Updated documentation, converted passive voice to active voice where possible. (rocamocha)
 
 # License
 My code is under MIT license
