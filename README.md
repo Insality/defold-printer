@@ -1,5 +1,7 @@
 ![](docs/logo.png)
 
+[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
+
 # Printer
 A symbol-by-symbol text writer for Defold Engine. Developed for rich game dialogs.
 Support UTF-8 symbols (via utf-8.lua). So Russian and other 2+ bytes symbol languages are supported.
@@ -8,6 +10,9 @@ Support UTF-8 symbols (via utf-8.lua). So Russian and other 2+ bytes symbol lang
 
 Add library to dependency:
 `https://github.com/Insality/defold-printer/archive/master.zip`
+
+If you use **Defold** version less than `1.7.0` use this version:
+`https://github.com/Insality/defold-printer/archive/refs/tags/1.1.0.zip`
 
 ![](docs/example.gif)
 
