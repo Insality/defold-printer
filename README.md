@@ -29,10 +29,10 @@ function init(self)
 	self.printer = printer.new(self, template_name)
 end
 function update(self, dt)
-	printer.update(self)
+	self.printer:update(dt)
 end
 function final(self)
-	printer.final(self)
+	self.printer:final()
 end
 ```
 
