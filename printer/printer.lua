@@ -137,7 +137,7 @@ local function get_style(self, name)
 end
 
 
-local function set_shake(self, power, time)
+local function set_shake(self, power, time)	
 	self.shake_time = time
 	self.shake_power = power
 end
@@ -470,7 +470,11 @@ end
 
 
 function M.print(self, str, source)
-	self.node_parent_pos = gui.get_position(self.node_parent)
+	-- Only update node_parent_pos if we're not currently shaking
+    if self.shake_time <= 0 then
+        self.node_parent_pos = gui.get_position(self.node_parent)
+    end
+
 	self.parent_size = gui.get_size(self.node_parent)
 
 	if self.is_print then
@@ -510,7 +514,11 @@ end
 
 
 function M.update(self, dt)
-	self.node_parent_pos = gui.get_position(self.node_parent)
+	-- Only update node_parent_pos if we're not currently shaking
+    if self.shake_time <= 0 then
+        self.node_parent_pos = gui.get_position(self.node_parent)
+    end
+
 	self.parent_size = gui.get_size(self.node_parent)
 
 	if self.is_print then
