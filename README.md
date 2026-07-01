@@ -11,7 +11,7 @@ Support UTF-8 symbols (via utf-8.lua). So Russian and other 2+ bytes symbol lang
 # Install
 
 Add library to dependency:
-`https://github.com/Insality/defold-printer/archive/refs/tags/1.2.1.zip`
+`https://github.com/Insality/defold-printer/archive/refs/tags/1.2.2.zip`
 
 If you use **Defold** version less than `1.7.0` use this version:
 `https://github.com/Insality/defold-printer/archive/refs/tags/1.1.0.zip`
@@ -236,6 +236,9 @@ Insality
 
 ### **1.2.1**
 - Fixed bug with node shaking (@farazk86)
+
+### **1.2.2**
+- Migration to Defold 1.13.0 (@Vast-eel)
 
 </details>
 
