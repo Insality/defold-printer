@@ -137,7 +137,7 @@ local function get_style(self, name)
 end
 
 
-local function set_shake(self, power, time)	
+local function set_shake(self, power, time)
 	self.shake_time = time
 	self.shake_power = power
 end
@@ -145,12 +145,14 @@ end
 
 local function get_letter_size(node_data)
 	local size
+	local font_name = gui.get_font(node_data.node)
+	local font = gui.get_font_resource(font_name)
 	if node_data.is_icon then
 		size = gui.get_size(node_data.node)
 		-- dirty hack
 		size = {width = size.x, height = size.y}
 	else
-		size = gui.get_text_metrics_from_node(node_data.node)
+		size = resource.get_text_metrics(font, node_data.text)
 	end
 	local scale = gui.get_scale(node_data.node)
 
